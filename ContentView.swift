@@ -5,13 +5,26 @@ struct ContentView: View {
     @State var firstNumber = ""
     @State var secondNumber = ""
     
+    @State var isPresented = false
+    @State var answer = ""
+    
     var body: some View {
-        VStack {
-            Text("\(Int(firstNumber)! + Int(secondNumber)!)")
-            
+        VStack(alignment: .center) {
             TextField("First Number", text: $firstNumber)
-        
-            TextField("Second Numbeer", text: $secondNumber)
+                .multilineTextAlignment(.center)
+            
+            TextField("Second Number", text: $secondNumber)
+                .multilineTextAlignment(.center)
+            
+            Button {
+                answer = "\(Int(firstNumber)! + Int(secondNumber)!)"
+                isPresented = true
+            } label: {
+                Text("Calculate")
+            }
+        }
+        .alert(isPresented: $isPresented) {
+            Alert(title: Text("Answer:"), message: Text(answer), dismissButton: .default(Text("Dismiss")))
         }
     }
     
